@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Libertate Financiară</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:        #0e1117;
+    --surface:   #161b26;
+    --border:    #1f2937;
+    --gold:      #c9a84c;
+    --gold-dim:  #7a5e24;
+    --green:     #2dba7a;
+    --green-dim: #1a6645;
+    --red:       #e05a5a;
+    --blue:      #4fa3e0;
+    --text:      #e8e3d8;
+    --muted:     #6b7280;
+    --accent-bg: #1a1f2e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    text-align: center;
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+
+  .header-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .header-sub {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  /* ─── Section titles ─── */
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ─── Progress timeline ─── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 0 1.25rem;
+    position: relative;
+  }
+
+  .timeline-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .step-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+  }
+
+  .step-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    border: 2px solid;
+  }
+
+  .step-circle.gold  { background: rgba(201,168,76,0.12); border-color: var(--gold);  color: var(--gold); }
+  .step-circle.green { background: rgba(45,186,122,0.12); border-color: var(--green); color: var(--green); }
+  .step-circle.blue  { background: rgba(79,163,224,0.12); border-color: var(--blue);  color: var(--blue); }
+
+  .step-body {
+    padding: 0 0 2.5rem 0;
+  }
+
+  .step-body h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .step-body p {
+    color: #9ca3af;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .amount-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .amount-badge.gold  { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .amount-badge.green { background: rgba(45,186,122,0.15); color: var(--green); }
+  .amount-badge.blue  { background: rgba(79,163,224,0.15); color: var(--blue); }
+
+  /* ─── Calc card ─── */
+  .calc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.2rem 0;
+  }
+
+  .calc-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    gap: 1rem;
+  }
+
+  .calc-row:last-child { border-bottom: none; }
+
+  .calc-row .label { color: var(--muted); flex: 1; }
+  .calc-row .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: var(--text);
+    text-align: right;
+  }
+
+  .calc-row .value.gold  { color: var(--gold); }
+  .calc-row .value.green { color: var(--green); }
+  .calc-row .value.red   { color: var(--red); }
+
+  /* ─── Highlight box ─── */
+  .highlight {
+    border-left: 3px solid var(--gold);
+    background: rgba(201,168,76,0.06);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    font-size: 14px;
+    color: #c9b97c;
+    line-height: 1.65;
+  }
+
+  .highlight.green {
+    border-color: var(--green);
+    background: rgba(45,186,122,0.06);
+    color: #6de0a7;
+  }
+
+  .highlight.red {
+    border-color: var(--red);
+    background: rgba(224,90,90,0.06);
+    color: #e89898;
+  }
+
+  .highlight.blue {
+    border-color: var(--blue);
+    background: rgba(79,163,224,0.06);
+    color: #90c8ef;
+  }
+
+  /* ─── Scenario cards ─── */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .scenario {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scenario::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .scenario.s1::before { background: var(--green); }
+  .scenario.s2::before { background: var(--gold); }
+  .scenario.s3::before { background: var(--red); }
+
+  .scenario-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .scenario.s1 .scenario-tag { color: var(--green); }
+  .scenario.s2 .scenario-tag { color: var(--gold); }
+  .scenario.s3 .scenario-tag { color: var(--red); }
+
+  .scenario h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .scenario p {
+    font-size: 14px;
+    color: #9ca3af;
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+  }
+
+  .scenario p:last-child { margin-bottom: 0; }
+
+  .scenario .outcome {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 0.4rem 0.75rem;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+  .scenario.s1 .outcome { background: rgba(45,186,122,0.12); color: var(--green); }
+  .scenario.s2 .outcome { background: rgba(201,168,76,0.12); color: var(--gold); }
+  .scenario.s3 .outcome { background: rgba(224,90,90,0.12); color: var(--red); }
+
+  /* ─── Mobility section ─── */
+  .pros-list {
+    list-style: none;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .pros-list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 14px;
+    color: #9ca3af;
+    line-height: 1.55;
+  }
+
+  .pros-list li .icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 15px;
+  }
+
+  /* ─── Big number display ─── */
+  .big-stat {
+    text-align: center;
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 1.5rem 0;
+  }
+
+  .big-stat .number {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .big-stat .desc {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── Explainer box (obligatiuni) ─── */
+  .explainer {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .explainer-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .explainer h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .explainer p {
+    font-size: 14px;
+    color: #9ca3af;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .explainer p:last-child { margin-bottom: 0; }
+
+  /* ─── Inflation bar ─── */
+  .inflation-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+
+  .inflation-bar h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.1rem;
+  }
+
+  .infl-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    font-size: 14px;
+  }
+
+  .infl-label {
+    width: 160px;
+    flex-shrink: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .infl-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .infl-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  .infl-fill.spend  { background: var(--red);   width: 93.3%; }
+  .infl-fill.earn   { background: var(--green);  width: 100%; }
+  .infl-fill.delta  { background: var(--gold);   width: 6.7%; }
+
+  .infl-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    width: 80px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .infl-val.red   { color: var(--red); }
+  .infl-val.green { color: var(--green); }
+  .infl-val.gold  { color: var(--gold); }
+
+  /* ─── Maturity reinvestment ─── */
+  .maturity-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .mflow-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    position: relative;
+  }
+
+  .mflow-step.highlight-step {
+    border-color: var(--gold-dim);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .mflow-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .mflow-content h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .mflow-content p {
+    font-size: 13px;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+
+  .mflow-content .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* ─── Bond portfolio cards (new design) ─── */
+  .portfolio-state {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 1.2rem 0;
+  }
+
+  .portfolio-header {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .portfolio-header-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .portfolio-total {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .portfolio-total.green { color: var(--green); }
+  .portfolio-total.red   { color: var(--red); }
+
+  .bond-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .bond-card:last-child { border-bottom: none; }
+
+  .bond-card.expired-card {
+    background: rgba(224,90,90,0.05);
+    border-color: rgba(224,90,90,0.2);
+    opacity: 0.65;
+  }
+
+  .bond-card.new-card {
+    background: rgba(201,168,76,0.05);
+    border-color: rgba(201,168,76,0.2);
+  }
+
+  .bond-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .bond-dot.blue  { background: var(--blue); }
+  .bond-dot.green { background: var(--green); }
+  .bond-dot.gold  { background: var(--gold); }
+  .bond-dot.red   { background: var(--red); box-shadow: 0 0 0 3px rgba(224,90,90,0.15); }
+  .bond-dot.new   { background: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.2); }
+
+  .bond-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .bond-card.expired-card .bond-name {
+    color: var(--red);
+    text-decoration: line-through;
+    text-decoration-color: rgba(224,90,90,0.5);
+  }
+
+  .bond-card.new-card .bond-name { color: var(--gold); }
+
+  .bond-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .bond-tag.expired-tag { background: rgba(224,90,90,0.12); color: var(--red); }
+  .bond-tag.new-tag     { background: rgba(201,168,76,0.12); color: var(--gold); }
+
+  .bond-monthly {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: right;
+    min-width: 80px;
+  }
+
+  .bond-monthly.blue  { color: var(--blue); }
+  .bond-monthly.green { color: var(--green); }
+  .bond-monthly.gold  { color: var(--gold); }
+  .bond-monthly.red   { color: var(--red); }
+  .bond-monthly.muted { color: var(--muted); text-decoration: line-through; }
+
+  .bond-card.expired-card .bond-monthly { color: var(--red); opacity: 0.6; }
+
+  /* ─── Transition arrow ─── */
+  .transition-arrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    margin: 0.25rem 0;
+  }
+
+  .transition-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+  }
+
+  .transition-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    background: rgba(224,90,90,0.1);
+    border: 1px solid rgba(224,90,90,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    white-space: nowrap;
+  }
+
+  .transition-label.gold-label {
+    color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    border-color: rgba(201,168,76,0.2);
+  }
+
+  /* ─── Reinvest calc mini ─── */
+  .reinvest-calc {
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .reinvest-calc h5 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .reinvest-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    gap: 1rem;
+  }
+
+  .reinvest-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .reinvest-row .rl { color: var(--muted); flex: 1; }
+  .reinvest-row .rv {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gold);
+    text-align: right;
+  }
+
+  .stack-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.4rem 0;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .stack-divider::before,
+  .stack-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── NEW: Timp de acumulare ─── */
+  .accum-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  @media (max-width: 520px) {
+    .accum-grid { grid-template-columns: 1fr; }
+  }
+
+  .accum-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .accum-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .accum-card.solo::before  { background: var(--gold); }
+  .accum-card.duo::before   { background: var(--green); }
+
+  .accum-card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .accum-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .accum-card.solo .accum-card-label { color: var(--gold); }
+  .accum-card.duo  .accum-card-label { color: var(--green); }
+
+  .accum-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .accum-big-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 7vw, 3.2rem);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .accum-card.solo .accum-big-num { color: var(--gold); }
+  .accum-card.duo  .accum-big-num { color: var(--green); }
+
+  .accum-big-unit {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .accum-detail {
+    font-size: 13px;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+
+  .accum-detail strong { color: var(--text); }
+
+  /* ─── NEW: Salary breakdown inline bar ─── */
+  .salary-bar-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+
+  .salary-bar-wrap h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.1rem;
+  }
+
+  .sal-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+    font-size: 14px;
+  }
+
+  .sal-label {
+    width: 170px;
+    flex-shrink: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .sal-track {
+    flex: 1;
+    height: 7px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .sal-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .sal-fill.cheltuieli { background: var(--red); }
+  .sal-fill.economii  { background: var(--green); }
+
+  .sal-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    width: 90px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .sal-val.red   { color: var(--red); }
+  .sal-val.green { color: var(--green); }
+  .sal-val.gold  { color: var(--gold); }
+
+  /* ─── NEW: Libertate vs. Confort secțiune ─── */
+  .vs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  @media (max-width: 540px) {
+    .vs-grid { grid-template-columns: 1fr; }
+  }
+
+  .vs-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vs-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .vs-card.them::before { background: var(--muted); }
+  .vs-card.me::before   { background: var(--gold); }
+
+  .vs-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .vs-card.them .vs-tag { color: var(--muted); }
+  .vs-card.me   .vs-tag { color: var(--gold); }
+
+  .vs-card-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+
+  .vs-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .vs-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .vs-list li {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 13px;
+    color: #9ca3af;
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+
+  .vs-list li .vi { flex-shrink: 0; font-size: 13px; }
+
+  .vs-card.them .vs-list li { color: #6b7280; }
+  .vs-card.me   .vs-list li { color: #9ca3af; }
+
+  /* ─── NEW: Freedom manifesto ─── */
+  .manifesto-block {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(45,186,122,0.04) 100%);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .manifesto-block::after {
+    content: '∞';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Serif Display', serif;
+    font-size: 6rem;
+    color: rgba(201,168,76,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .manifesto-block p {
+    font-size: 15px;
+    color: #c9b97c;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+
+  .manifesto-block p + p {
+    margin-top: 0.9rem;
+  }
+
+  .manifesto-block strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .manifesto-block em {
+    font-style: italic;
+    color: #e8e3d8;
+  }
+
+  /* ─── NEW: Freedom icons strip ─── */
+  .freedom-strip {
+    display: flex;
+    gap: 0;
+    margin: 1.25rem 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .freedom-item {
+    flex: 1;
+    text-align: center;
+    padding: 1.25rem 0.75rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .freedom-item:last-child { border-right: none; }
+
+  .freedom-item .fi-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+  .freedom-item .fi-label {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Plan personal · Vârsta curentă: <span id="age-display"></span></div>
+    <h1>Drumul spre<br><em>libertate financiară</em></h1>
+    <p class="header-sub">Obiectiv total: 300.000 € · Strategie în trei etape</p>
+  </div>
+
+  <!-- ETAPELE -->
+  <div class="section">
+    <div class="section-label">Roadmap</div>
+    <div class="section-title">Cele trei etape</div>
+
+    <div class="timeline">
+
+      <div class="timeline-step">
+        <div class="step-node">
+          <div class="step-circle gold">1</div>
+        </div>
+        <div class="step-body">
+          <div class="amount-badge gold">120.000 €</div>
+          <h3>Cumpăr un apartament în Italia</h3>
+          <p>
+            Primul obiectiv este acumularea a 120.000 € pentru achiziționarea unui apartament în Italia.
+            Eliminând chiria lunară, întreaga sumă care ar fi mers pe chirie poate fi economisită și reinvestită —
+            exact ca și cum nu ai plăti chirie deloc, dar banii rămân la tine.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="step-node">
+          <div class="step-circle green">2</div>
+        </div>
+        <div class="step-body">
+          <div class="amount-badge green">+ 180.000 €</div>
+          <h3>Strâng alți 180.000 € pe lângă apartament</h3>
+          <p>
+            Cu chiria eliminată, ritmul de economisire crește semnificativ. Obiectivul este atingerea
+            unui total de <strong style="color: var(--text)">300.000 €</strong> — adică valoarea apartamentului (120.000 €)
+            plus 180.000 € cash.
+            În momentul în care suma totală e atinsă, apartamentul se vinde și totul devine lichid:
+            <strong style="color: var(--text)">300.000 € cash</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="step-node">
+          <div class="step-circle blue">3</div>
+        </div>
+        <div class="step-body">
+          <div class="amount-badge blue">300.000 € total</div>
+          <h3>Libertate financiară — munca devine opțională</h3>
+          <p>
+            La atingerea celor 300.000 €, munca nu mai este o necesitate. Suma se împarte strategic
+            în două roluri distincte: <strong style="color: var(--text)">un motor de venit pasiv</strong> și
+            <strong style="color: var(--text)">un fond de rezervă solid</strong>.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STRATEGIA DE INVESTIȚIE -->
+  <div class="section">
+    <div class="section-label">Mecanismul</div>
+    <div class="section-title">Cum funcționează cei 300.000 €</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1.25rem;">
+      Suma totală se divide în două blocuri cu roluri clare — un bloc activ care generează venit,
+      și un bloc pasiv care asigură liniștea.
+    </p>
+
+    <div class="calc-card">
+      <h4>Calculul investiției în obligațiuni de stat</h4>
+      <div class="calc-row">
+        <span class="label">Cheltuieli lunare estimate</span>
+        <span class="value gold">700 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Cheltuieli anuale</span>
+        <span class="value">700 × 12 = 8.400 € / an</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Randament obligațiuni de stat (România)</span>
+        <span class="value">7% / an</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Capital necesar investit (8.400 ÷ 7%)</span>
+        <span class="value gold">120.000 €</span>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>Logica:</strong> investind 120.000 € în obligațiuni la 7% anual, câștigul anual este exact 8.400 €
+      (700 € × 12 luni) — suficient să acopere 100% din cheltuielile de trai, fără să atingi capitalul.
+    </div>
+
+    <div class="calc-card" style="margin-top:1.25rem;">
+      <h4>Structura celor 300.000 €</h4>
+      <div class="calc-row">
+        <span class="label">💰 Investit în obligațiuni (motor de venit)</span>
+        <span class="value gold">120.000 €</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">🛡️ Fond de rezervă (siguranță totală)</span>
+        <span class="value green">180.000 €</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Total</span>
+        <span class="value" style="color:var(--text)">300.000 €</span>
+      </div>
+    </div>
+
+    <div class="highlight green">
+      <strong>Regula de aur:</strong> cheltuielile sunt acoperite integral din dobânzi. Nici capitalul investit,
+      nici rezerva nu se ating. După un an întreg, soldul rămâne fix la <strong>300.000 €</strong>.
+      Banii nu scad niciodată — în scenariul optim, această sumă ajunge pe toată viața.
+    </div>
+  </div>
+
+  <!-- CE SUNT OBLIGATIUNILE DE STAT -->
+  <div class="section">
+    <div class="section-label">Educație financiară</div>
+    <div class="section-title">Ce sunt obligațiunile de stat?</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1.25rem;">
+      Înainte să investești, e important să înțelegi exact cu ce ai de-a face.
+    </p>
+
+    <div class="explainer">
+      <div class="explainer-icon">🏛️</div>
+      <h4>Un împrumut dat statului</h4>
+      <p>
+        O obligațiune de stat este, în esență, un împrumut pe care <em>tu</em> îl dai statului.
+        Statul are nevoie de bani — pentru infrastructură, salarii, investiții publice — și în loc să
+        împrumute doar de la bănci, îți oferă și ție posibilitatea să participi.
+      </p>
+      <p>
+        Funcționează simplu: dai statului o sumă de bani pe o perioadă fixă (de obicei 1–4 ani).
+        Statul folosește acei bani ca să genereze valoare, și în schimb îți plătește o dobândă anuală fixă.
+        La finalul perioadei (numită <strong style="color:var(--text)">maturitate</strong>), primești înapoi exact suma investită inițial.
+      </p>
+      <p>
+        E ca și cum ai fi bancă — dar în loc să dai credite persoanelor fizice, dai credit statului.
+        Și statul, spre deosebire de oameni, nu dispare.
+      </p>
+    </div>
+
+    <div class="calc-card">
+      <h4>Exemplu concret · 100.000 € la 7% pe 4 ani</h4>
+      <div class="calc-row">
+        <span class="label">Capital investit</span>
+        <span class="value gold">100.000 €</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Dobândă anuală (7%)</span>
+        <span class="value green">7.000 € / an</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Dobândă lunară (7.000 ÷ 12)</span>
+        <span class="value green">≈ 583 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Total dobânzi în 4 ani (583 × 48 luni)</span>
+        <span class="value green">≈ 28.000 €</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Capitalul returnat la maturitate (luna 48)</span>
+        <span class="value gold">100.000 €</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Total încasat după 4 ani</span>
+        <span class="value" style="color:var(--text); font-size:15px;">128.000 €</span>
+      </div>
+    </div>
+
+    <div class="highlight green">
+      <strong>Concluzia simplă:</strong> din 100.000 € ai făcut 128.000 € în 4 ani, fără să faci nimic,
+      fără să vinzi ceva, fără risc real. Banii au lucrat singuri, statul a plătit.
+      La scadență primești și câștigul, și capitalul — totul intact.
+    </div>
+
+    <div class="highlight blue" style="margin-top:0.75rem;">
+      <strong>Perioada de maturitate</strong> variază: poți alege obligațiuni pe 1 an, 2 ani, 3 ani sau 4 ani,
+      în funcție de cât timp vrei să imobilizezi banii. Cu cât perioada e mai lungă, cu atât dobânda
+      oferită tinde să fie mai avantajoasă.
+    </div>
+  </div>
+
+  <!-- LUPTA CU INFLATIA -->
+  <div class="section">
+    <div class="section-label">Protecție</div>
+    <div class="section-title">Cum luptăm cu inflația</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1.25rem;">
+      Inflația înseamnă că banii valorează puțin mai puțin în fiecare an. Planul are un mecanism
+      integrat care nu doar rezistă inflației — o înfrânge.
+    </p>
+
+    <div class="inflation-bar">
+      <h4>Fluxul lunar · cheltuieli vs. câștig din obligațiuni</h4>
+      <div class="infl-row">
+        <span class="infl-label">Cheltuieli lunare</span>
+        <div class="infl-track"><div class="infl-fill spend"></div></div>
+        <span class="infl-val red">700 €</span>
+      </div>
+      <div class="infl-row">
+        <span class="infl-label">Câștig din dobânzi</span>
+        <div class="infl-track"><div class="infl-fill earn"></div></div>
+        <span class="infl-val green">750 €</span>
+      </div>
+      <div class="infl-row">
+        <span class="infl-label">Surplus lunar</span>
+        <div class="infl-track"><div class="infl-fill delta"></div></div>
+        <span class="infl-val gold">+50 €</span>
+      </div>
+    </div>
+
+    <p style="color:#9ca3af; font-size:14px; margin: 1rem 0;">
+      Ideea e simplă: în loc să investești exact cât să câștige 700 €/lună, investești puțin mai mult —
+      astfel încât obligațiunile să genereze <strong style="color:var(--text)">750 €/lună</strong>.
+      Diferența de 50 € pe lună nu se cheltuie — se acumulează.
+    </p>
+
+    <div class="calc-card">
+      <h4>Acumulare anuală din surplus</h4>
+      <div class="calc-row">
+        <span class="label">Surplus lunar</span>
+        <span class="value gold">+50 €</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Surplus anual (50 × 12 luni)</span>
+        <span class="value gold">+600 €</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Capital total după 1 an (300.000 + 600)</span>
+        <span class="value green">300.600 €</span>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>Efectul compus:</strong> în fiecare an, capitalul crește cu ~600 €.
+      Nu e mult pe hârtie — dar înseamnă că puterea de cumpărare a planului nu scade niciodată.
+      Dacă inflația crește prețurile cu 2–3% pe an, surplusul acumulat compensează exact această eroziune.
+      Banii nu pierd teren.
+    </div>
+
+    <div class="scenario-grid" style="margin-top:1.5rem;">
+
+      <div class="scenario s1">
+        <div class="scenario-tag">Scenariu echilibrat</div>
+        <h3>Cheltuiești exact 700 € · câștig 700 €</h3>
+        <p>
+          Capitalul rămâne perfect fix la 300.000 €. Nu crește, nu scade.
+          Nici capitalul, nici rezerva nu se ating vreodată. Planul e sustenabil la infinit.
+        </p>
+        <span class="outcome">= 300.000 € rămân permanent</span>
+      </div>
+
+      <div class="scenario s2">
+        <div class="scenario-tag">Scenariu optim · recomandat</div>
+        <h3>Cheltuiești 700 € · câștig 750 €</h3>
+        <p>
+          Surplusul de 50 €/lună se acumulează discret. Într-un an: +600 €.
+          Capitalul ajunge la 300.600 € după primul an, 301.200 € după al doilea, și tot așa.
+          Planul se <em>auto-îmbunătățește</em> în fiecare an, fără niciun efort suplimentar.
+        </p>
+        <span class="outcome">↗ 300.600 € după primul an</span>
+      </div>
+
+      <div class="scenario s3">
+        <div class="scenario-tag">Scenariu depășit</div>
+        <h3>Cheltuiești 800 € · câștig 700 €</h3>
+        <p>
+          Consumi cu 100 € mai mult decât câștigi. Diferența se scade din rezerva de 180.000 €.
+        </p>
+        <p>
+          <strong style="color:var(--text)">180.000 € ÷ 100 €/lună = 1.800 luni = 150 de ani</strong> până
+          la epuizarea rezervei. Ulterior, cei 120.000 € investiți pot fi și ei retrași treptat:
+          <strong style="color:var(--text)">120.000 € ÷ 800 €/lună = 150 luni = 12,5 ani</strong>.
+          Total: <strong style="color:var(--text)">162 de ani</strong> de autonomie financiară chiar și cheltuind mai mult decât câștigi.
+        </p>
+        <p style="font-style:italic; color:#6b7280;">
+          Cine trăiește până la 162 de ani? 😄 Planul e practic imposibil de epuizat.
+        </p>
+        <span class="outcome">~ 162 ani · cel mai pesimist scenariu real</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- REINVESTIRE LA MATURITATE -->
+  <div class="section">
+    <div class="section-label">Gestiunea portofoliului</div>
+    <div class="section-title">Ce faci când o obligațiune ajunge la maturitate?</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1.25rem;">
+      Obligațiunile nu sunt investiții pe viață — ele expiră. Asta nu e o problemă, ci o oportunitate.
+      Există un mecanism simplu prin care portofoliul se menține constant, fără să pierzi niciun euro din fluxul lunar.
+    </p>
+
+    <!-- ÎNAINTE -->
+    <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.5rem; letter-spacing: 0.05em;">ÎNAINTE · portofoliu activ complet</p>
+    <div class="portfolio-state">
+      <div class="portfolio-header">
+        <span class="portfolio-header-title">3 obligațiuni active</span>
+        <span class="portfolio-total green">Total: 750 € / lună ✓</span>
+      </div>
+      <div class="bond-card">
+        <div class="bond-dot blue"></div>
+        <span class="bond-name">Obligațiunea A</span>
+        <span class="bond-monthly blue">+ 300 € / lună</span>
+      </div>
+      <div class="bond-card">
+        <div class="bond-dot green"></div>
+        <span class="bond-name">Obligațiunea B</span>
+        <span class="bond-monthly green">+ 250 € / lună</span>
+      </div>
+      <div class="bond-card">
+        <div class="bond-dot gold"></div>
+        <span class="bond-name">Obligațiunea C</span>
+        <span class="bond-monthly gold">+ 200 € / lună</span>
+      </div>
+    </div>
+
+    <!-- EVENIMENTUL -->
+    <div class="transition-arrow">
+      <div class="transition-line"></div>
+      <span class="transition-label">⚠ Obligațiunea C ajunge la maturitate</span>
+      <div class="transition-line"></div>
+    </div>
+
+    <p style="color:#9ca3af; font-size:14px; margin: 0.5rem 0 1rem;">
+      Statul îți returnează capitalul investit în Obligațiunea C — integral, fără pierderi.
+      Dar veniturile din ea dispar. Fluxul lunar scade temporar la <strong style="color:var(--red)">550 € / lună</strong> — cu 200 € sub ce ai nevoie.
+    </p>
+
+    <!-- DUPĂ EXPIRARE -->
+    <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.5rem; letter-spacing: 0.05em;">DUPĂ EXPIRARE · venit lunar insuficient</p>
+    <div class="portfolio-state">
+      <div class="portfolio-header">
+        <span class="portfolio-header-title">2 obligațiuni active · 1 expirată</span>
+        <span class="portfolio-total red">Total: 550 € / lună ✗</span>
+      </div>
+      <div class="bond-card">
+        <div class="bond-dot blue"></div>
+        <span class="bond-name">Obligațiunea A</span>
+        <span class="bond-monthly blue">+ 300 € / lună</span>
+      </div>
+      <div class="bond-card">
+        <div class="bond-dot green"></div>
+        <span class="bond-name">Obligațiunea B</span>
+        <span class="bond-monthly green">+ 250 € / lună</span>
+      </div>
+      <div class="bond-card expired-card">
+        <div class="bond-dot red"></div>
+        <span class="bond-name">Obligațiunea C</span>
+        <span class="bond-tag expired-tag">expirată</span>
+        <span class="bond-monthly" style="color:var(--muted); text-decoration:line-through; font-family:'JetBrains Mono',monospace; font-size:13px;">+ 200 € / lună</span>
+      </div>
+    </div>
+
+    <!-- CALCULUL -->
+    <div class="reinvest-calc">
+      <h5>🧮 Calculul reinvestirii · cât trebuie să bagi înapoi</h5>
+      <div class="reinvest-row">
+        <span class="rl">Flux lunar pierdut</span>
+        <span class="rv">− 200 € / lună</span>
+      </div>
+      <div class="reinvest-row">
+        <span class="rl">Necesar anual (200 × 12)</span>
+        <span class="rv">= 2.400 € / an</span>
+      </div>
+      <div class="reinvest-row">
+        <span class="rl">Capital de reinvestit (2.400 ÷ 7%)</span>
+        <span class="rv">≈ 34.285 €</span>
+      </div>
+      <div class="reinvest-row">
+        <span class="rl">De unde vine?</span>
+        <span class="rv">Din capitalul returnat de C</span>
+      </div>
+    </div>
+
+    <!-- SĂGEATA DE REINVESTIRE -->
+    <div class="transition-arrow">
+      <div class="transition-line"></div>
+      <span class="transition-label gold-label">♻ Reinvestești 34.285 € într-o obligațiune nouă</span>
+      <div class="transition-line"></div>
+    </div>
+
+    <!-- DUPĂ REINVESTIRE -->
+    <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.5rem; letter-spacing: 0.05em;">DUPĂ REINVESTIRE · portofoliu restaurat</p>
+    <div class="portfolio-state">
+      <div class="portfolio-header">
+        <span class="portfolio-header-title">3 obligațiuni active · flux restaurat</span>
+        <span class="portfolio-total green">Total: 750 € / lună ✓</span>
+      </div>
+      <div class="bond-card">
+        <div class="bond-dot blue"></div>
+        <span class="bond-name">Obligațiunea A</span>
+        <span class="bond-monthly blue">+ 300 € / lună</span>
+      </div>
+      <div class="bond-card">
+        <div class="bond-dot green"></div>
+        <span class="bond-name">Obligațiunea B</span>
+        <span class="bond-monthly green">+ 250 € / lună</span>
+      </div>
+      <div class="bond-card new-card">
+        <div class="bond-dot new"></div>
+        <span class="bond-name">Obligațiunea D</span>
+        <span class="bond-tag new-tag">nouă</span>
+        <span class="bond-monthly gold">+ 200 € / lună</span>
+      </div>
+    </div>
+
+    <div class="highlight green" style="margin-top:1.25rem;">
+      <strong>Regula de bază:</strong> când o obligațiune expiră, nu e o criză — e un ciclu normal.
+      Capitalul returnat se reinvestește imediat, calculul e de câteva secunde, și fluxul lunar
+      revine intact. Portofoliul se auto-regenerează la fiecare maturitate.
+    </div>
+
+    <div class="highlight" style="margin-top:0.75rem;">
+      <strong>Tamponul de siguranță:</strong> dacă obiectivul e 750 €/lună (nu 700 €), reinvestirea
+      acoperă automat și cei 50 € surplus. Nu e nevoie niciodată să tai din cheltuieli în perioada
+      de tranziție — rezerva de 180.000 € există exact pentru astfel de ferestre scurte.
+    </div>
+  </div>
+
+  <!-- MOBILITATE -->
+  <div class="section">
+    <div class="section-label">Stil de viață</div>
+    <div class="section-title">De ce nu un apartament în România?</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1rem;">
+      Investiția în obligațiuni de stat oferă avantaje clare față de proprietatea imobiliară în România,
+      mai ales dacă libertatea de mișcare contează.
+    </p>
+
+    <ul class="pros-list">
+      <li>
+        <span class="icon">🌍</span>
+        <span><strong style="color:var(--text)">Mobilitate totală</strong> — poți schimba orașul sau țara oricând, fără a fi legat de o proprietate.
+        Banii investiți la stat îți permit să alegi orice locuință, oricând, după preferințele momentului.</span>
+      </li>
+      <li>
+        <span class="icon">🔥</span>
+        <span><strong style="color:var(--text)">Fără riscuri de proprietate</strong> — un apartament poate fi afectat de inundații, incendii,
+        explozii din vina vecinilor sau alte situații imprevizibile. Aceste costuri cad integral pe proprietar.
+        Obligațiunile de stat nu au aceste vulnerabilități fizice.</span>
+      </li>
+      <li>
+        <span class="icon">📋</span>
+        <span><strong style="color:var(--text)">Fără taxe și întreținere</strong> — proprietatea imobiliară vine cu impozite anuale, costuri de
+        administrare, reparații, renovări. Obligațiunile nu generează costuri ascunse.</span>
+      </li>
+      <li>
+        <span class="icon">💧</span>
+        <span><strong style="color:var(--text)">Lichiditate</strong> — obligațiunile pot fi accesate mult mai ușor decât vânzarea unui apartament,
+        care poate dura luni întregi și implică costuri de tranzacție.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SCENARII DE RISC -->
+  <div class="section">
+    <div class="section-label">Analiză de risc</div>
+    <div class="section-title">Cele trei scenarii posibile</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1.25rem;">
+      Planul a fost gândit să reziste chiar și în situații nefavorabile. Iată ce se întâmplă în fiecare caz:
+    </p>
+
+    <div class="scenario-grid">
+
+      <div class="scenario s1">
+        <div class="scenario-tag">Scenariul 1 · Optim</div>
+        <h3>Totul merge conform planului</h3>
+        <p>
+          120.000 € investiți în obligațiuni generează 700 €/lună, acoperind integral cheltuielile.
+          Rezerva de 180.000 € rămâne intactă. Capitalul total nu scade — rămâne permanent la 300.000 €.
+        </p>
+        <p>
+          Acesta este scenariul realist și probabil, nu excepția. Nu se cheltuie nici un euro
+          din capital, veniturile din dobânzi ajung exact cât e nevoie.
+        </p>
+        <span class="outcome">✓ Banii ajung pe toată viața</span>
+      </div>
+
+      <div class="scenario s2">
+        <div class="scenario-tag">Scenariul 2 · Risc parțial</div>
+        <h3>Pierzi investiția de 120.000 €</h3>
+        <p>
+          Situație extremă — practic imposibilă în absența unui colaps total al statului român
+          (caz în care toți oamenii sunt afectați, nu doar tu).
+          Chiar și în acest caz, rămân 180.000 € cash, intact.
+        </p>
+        <p>
+          <strong style="color:var(--text)">180.000 € ÷ 700 €/lună = 257 luni = 21 ani</strong> de trai fără nicio sursă de venit.
+          La vârsta de <span id="age-s2"></span> ani, asta înseamnă liniște financiară garantată până la <strong style="color:var(--text)"><span id="age-s2-plus21"></span> de ani</strong> —
+          timp mai mult decât suficient să te repoziționezi.
+        </p>
+        <span class="outcome">~ 21 ani de autonomie garantată</span>
+      </div>
+
+      <div class="scenario s3">
+        <div class="scenario-tag">Scenariul 3 · Fără investiții</div>
+        <h3>Cheltuiești direct din capital, fără investiții</h3>
+        <p>
+          Dacă, din orice motiv, nu investești nimic și consumi direct din cei 300.000 € la 700 €/lună:
+        </p>
+        <p>
+          <strong style="color:var(--text)">300.000 € ÷ 700 €/lună = 428 luni = 35 ani</strong> de trai.
+          La <span id="age-s3"></span> de ani, asta înseamnă autonomie până la <strong style="color:var(--text)"><span id="age-s3-plus35"></span> de ani</strong>.
+          Chiar și fără nicio strategie de investiții, suma este considerabilă.
+        </p>
+        <span class="outcome">~ 35 ani de autonomie (cel mai pesimist)</span>
+      </div>
+
+    </div>
+
+    <div class="highlight blue" style="margin-top:1.5rem;">
+      <strong>Concluzia analizei de risc:</strong> chiar în cel mai pesimist scenariu posibil (pierzi investiția
+      și cheltuiești direct din capital fără nicio dobândă), ai 35 de ani de libertate financiară deplină.
+      Probabilitatea ca scenariul 1 să se materializeze este de departe cea mai mare.
+    </div>
+  </div>
+
+  <!-- SUMARUL VIZUAL -->
+  <div class="section">
+    <div class="section-label">Perspectivă</div>
+    <div class="section-title">Ce înseamnă asta în practică</div>
+
+    <div class="big-stat">
+      <div class="number">300.000 €</div>
+      <div class="desc">suma la care munca devine complet opțională</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.75rem; margin-top:0.75rem;">
+      <div class="calc-card" style="text-align:center; padding:1.2rem 1rem;">
+        <div style="font-family:'DM Serif Display',serif; font-size:1.8rem; color:var(--gold); margin-bottom:0.3rem;">∞</div>
+        <div style="font-size:12px; color:var(--muted);">ani · scenariu optim</div>
+      </div>
+      <div class="calc-card" style="text-align:center; padding:1.2rem 1rem;">
+        <div style="font-family:'DM Serif Display',serif; font-size:1.8rem; color:var(--green); margin-bottom:0.3rem;">21</div>
+        <div style="font-size:12px; color:var(--muted);">ani · risc parțial</div>
+      </div>
+      <div class="calc-card" style="text-align:center; padding:1.2rem 1rem;">
+        <div style="font-family:'DM Serif Display',serif; font-size:1.8rem; color:var(--red); margin-bottom:0.3rem;">35</div>
+        <div style="font-size:12px; color:var(--muted);">ani · cel mai pesimist</div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:1.5rem;">
+      La <span id="age-conclusion"></span> de ani, chiar și scenariul cel mai defavorabil îți oferă o viață întreagă de libertate.
+      Planul nu este speranță — este matematică.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- NOU: CÂT TIMP DUREAZĂ ACUMULAREA -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Timpul necesar</div>
+    <div class="section-title">În cât timp ajungi la 300.000 €?</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1.25rem;">
+      Calculul e simplu și brutal de optimist. Cu un salariu de 2.000 € din care
+      cheltuiești 700 €/lună, rămân <strong style="color:var(--text)">1.300 € economii nete în fiecare lună</strong>.
+      Dar nu trebuie să ajungi la 300.000 € singur — poți face asta și în doi.
+    </p>
+
+    <!-- Breakdown salariu solo -->
+    <div class="salary-bar-wrap">
+      <h4>💼 Breakdown salariu · 2.000 € / lună (singur)</h4>
+      <div class="sal-row">
+        <span class="sal-label">Cheltuieli de trai</span>
+        <div class="sal-track"><div class="sal-fill cheltuieli" style="width:35%"></div></div>
+        <span class="sal-val red">700 €</span>
+      </div>
+      <div class="sal-row">
+        <span class="sal-label">Economii lunare</span>
+        <div class="sal-track"><div class="sal-fill economii" style="width:65%"></div></div>
+        <span class="sal-val green">1.300 €</span>
+      </div>
+      <div class="sal-row" style="margin-bottom:0;">
+        <span class="sal-label">Rata de economisire</span>
+        <div class="sal-track"><div class="sal-fill economii" style="width:65%; background: var(--gold);"></div></div>
+        <span class="sal-val gold">65%</span>
+      </div>
+    </div>
+
+    <!-- Carduri de comparație solo vs duo -->
+    <div class="accum-grid">
+
+      <div class="accum-card solo">
+        <div class="accum-card-icon">🧍</div>
+        <div class="accum-card-label">Singur · 2.000 € / lună</div>
+        <h3>Fără partener</h3>
+        <div class="accum-big-num" id="solo-years">~19</div>
+        <div class="accum-big-unit">ani de muncă</div>
+        <div class="accum-detail">
+          <strong>300.000 € ÷ 1.300 € / lună</strong> = 230 luni = <strong>~19 ani</strong>.
+          Economiind 1.300 €/lună, atingi suma completă și îți asiguri libertatea financiară pe viață —
+          fără să depinzi de nimeni.
+        </div>
+      </div>
+
+      <div class="accum-card duo">
+        <div class="accum-card-icon">👫</div>
+        <div class="accum-card-label">Împreună · 2.500–3.500 € / lună</div>
+        <h3>Cu un partener</h3>
+        <div class="accum-big-num" id="duo-years">~7</div>
+        <div class="accum-big-unit">ani de muncă</div>
+        <div class="accum-detail">
+          Venitul comun: <strong>2.000 + 1.500 € = 3.500 €</strong> (medie). Cheltuieli comune: <strong>1.200 €</strong>.
+          Economii lunare: <strong>~2.300 €/lună</strong>. La acest ritm, 300.000 € se strâng în
+          <strong>~130 luni = ~11 ani</strong> la minim, sau <strong>~7 ani</strong> la maxim (3.500 €).
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tabel detaliat duo -->
+    <div class="calc-card">
+      <h4>📊 Scenarii detaliate · venit comun 2.500 – 3.500 €</h4>
+      <div class="calc-row">
+        <span class="label">Venit comun minim (2.000 + 500 €)</span>
+        <span class="value">2.500 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Venit comun mediu (2.000 + 1.000 €)</span>
+        <span class="value">3.000 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Venit comun maxim (2.000 + 1.500 €)</span>
+        <span class="value">3.500 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Cheltuieli comune estimate (2 persoane)</span>
+        <span class="value red">1.200 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Economii lunare · scenariu minim</span>
+        <span class="value green">1.300 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Economii lunare · scenariu mediu</span>
+        <span class="value green">1.800 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Economii lunare · scenariu maxim</span>
+        <span class="value green">2.300 € / lună</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Timp până la 300.000 € · minim</span>
+        <span class="value gold">~19 ani (= 230 luni)</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Timp până la 300.000 € · mediu</span>
+        <span class="value gold">~14 ani (= 166 luni)</span>
+      </div>
+      <div class="calc-row">
+        <span class="label">Timp până la 300.000 € · maxim</span>
+        <span class="value gold">~11 ani (= 130 luni)</span>
+      </div>
+    </div>
+
+    <div class="highlight green">
+      <strong>Puterea parteneriatului:</strong> doi oameni cu capul pe umeri, care economisesc serios,
+      pot comprima 19 ani de muncă la ~11 ani — aproape înjumătățind drumul spre libertate.
+      La finalul celor 11 ani, <em>amândoi</em> sunt liberi financiar pentru tot restul vieții.
+    </div>
+
+    <div class="highlight blue" style="margin-top:0.75rem;">
+      <strong>Perspectivă:</strong> la <span id="age-accum"></span> de ani, chiar dacă pornești singur,
+      atingi libertatea financiară completă înainte de <strong style="color:var(--text)"><span id="age-accum-solo"></span> de ani</strong>.
+      Dacă ești în doi, înainte de <strong style="color:var(--text)"><span id="age-accum-duo"></span> de ani</strong>.
+      Restul vieții — zeci de ani — fără să ridici un deget dacă nu vrei.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- NOU: LIBERTATE VS CONFORT IMEDIAT -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Alegerea de viață</div>
+    <div class="section-title">500 € acum vs. libertate pentru totdeauna</div>
+
+    <p style="color:#9ca3af; font-size:14px; margin-bottom:1.25rem;">
+      Există o diferență fundamentală de filozofie între cei care optimizează <em>prezentul</em>
+      și cei care construiesc <em>viitorul</em>. Ambele sunt alegeri conștiente — dar consecințele sunt radical diferite.
+    </p>
+
+    <div class="vs-grid">
+
+      <div class="vs-card them">
+        <div class="vs-card-icon">🔄</div>
+        <div class="vs-tag">Calea confortului imediat</div>
+        <h3>„Libertate" acum, grijă până la bătrânețe</h3>
+        <ul class="vs-list">
+          <li><span class="vi">😮‍💨</span> Cheltuiești tot ce câștiguri — 500–700 € rămân după chirie, mâncare, distracție</li>
+          <li><span class="vi">🔁</span> Ciclul se repetă lunar, an de an, deceniu după deceniu</li>
+          <li><span class="vi">😰</span> La 50–60 de ani, aceeași întrebare: „câți bani îmi mai rămân mâine?"</li>
+          <li><span class="vi">🏚️</span> Pensia de stat — nesigură, mică, insuficientă</li>
+          <li><span class="vi">🔒</span> Locul de muncă nu mai e o alegere, devine o necesitate permanentă</li>
+          <li><span class="vi">✈️</span> Vacanță? Doar dacă îți permiți luna asta</li>
+        </ul>
+      </div>
+
+      <div class="vs-card me">
+        <div class="vs-card-icon">🏆</div>
+        <div class="vs-tag">Calea libertății reale</div>
+        <h3>Câțiva ani de disciplină, o viață întreagă liberă</h3>
+        <ul class="vs-list">
+          <li><span class="vi">⏳</span> 11–19 ani de economisire serioasă — o perioadă scurtă din viață</li>
+          <li><span class="vi">♾️</span> Dobânzile acoperă 100% din cheltuieli — pentru totdeauna</li>
+          <li><span class="vi">😴</span> Dormi liniștit — soldul nu scade niciodată în scenariul optim</li>
+          <li><span class="vi">🌍</span> Schimbi țara, orașul, apartamentul — oricând, fără permisiune</li>
+          <li><span class="vi">🤝</span> Munca devine o alegere, nu o obligație</li>
+          <li><span class="vi">🕐</span> Timpul e al tău — mănânci, ieși, călătorești când vrei tu</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Manifesto -->
+    <div class="manifesto-block">
+      <p>
+        Cei care aleg <strong>confortul imediat</strong> trăiesc cu iluzia că sunt liberi acum —
+        dar în realitate sunt prinși într-un ciclu care nu se oprește niciodată.
+        Luni de luni, ani de ani, aceeași numărătoare: <em>câți bani mai am până la salariu?</em>
+        Și la bătrânețe, aceeași teamă, poate și mai acută.
+      </p>
+      <p>
+        Tu, în schimb, alegi <strong>un număr finit de ani de muncă</strong> — 11, 14, 19 — după care
+        <em>niciodată nu mai numeri banii din nou</em>. Poți să dormi până la prânz. Să pleci în Moldova
+        la cei dragi, fără să verifici contul. Să schimbi apartamentul dacă nu-ți mai place zona.
+        Să lucrezi doar dacă vrei — și exact cât vrei.
+      </p>
+      <p>
+        <strong>Planul nu este speranță. Este matematică.</strong> Și matematica nu minte.
+      </p>
+    </div>
+
+    <!-- Freedom strip -->
+    <div class="freedom-strip">
+      <div class="freedom-item">
+        <div class="fi-icon">🛌</div>
+        <div class="fi-label">Dormi când<br>vrei tu</div>
+      </div>
+      <div class="freedom-item">
+        <div class="fi-icon">🍽️</div>
+        <div class="fi-label">Mănânci unde<br>vrei tu</div>
+      </div>
+      <div class="freedom-item">
+        <div class="fi-icon">✈️</div>
+        <div class="fi-label">Călătorești<br>oricând</div>
+      </div>
+      <div class="freedom-item">
+        <div class="fi-icon">🏠</div>
+        <div class="fi-label">Schimbi<br>apartamentul</div>
+      </div>
+      <div class="freedom-item">
+        <div class="fi-icon">🌍</div>
+        <div class="fi-label">Schimbi<br>țara</div>
+      </div>
+      <div class="freedom-item">
+        <div class="fi-icon">👨‍👩‍👧</div>
+        <div class="fi-label">Ești lângă<br>cei dragi</div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:1.25rem;">
+      <strong>Concluzie simplă:</strong> în timp ce alții muncesc obligatoriu până la 65+ de ani,
+      tu poți fi <em>complet liber financiar</em> înainte de 40 — și tot restul vieții e al tău.
+      Nu e vorba de lux. E vorba de timp. Și timpul e singurul lucru pe care nu-l poți cumpăra înapoi.
+    </div>
+  </div>
+
+  <div class="footer">
+    plan-financiar.html · generat cu Claude · vârsta de referință: <span id="age-footer"></span> ani · cheltuieli de referință: 700 €/lună
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    const BIRTH = new Date(2002, 9, 27); // 27 octombrie 2002 (luna 0-indexed)
+
+    function calcAge(birthDate) {
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+      return age;
+    }
+
+    const age = calcAge(BIRTH);
+
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+
+    set('age-display',     age + ' ani');
+    set('age-s2',          age);
+    set('age-s2-plus21',   age + 21);
+    set('age-s3',          age);
+    set('age-s3-plus35',   age + 35);
+    set('age-conclusion',  age);
+    set('age-footer',      age);
+
+    // Noile câmpuri pentru secțiunile de acumulare
+    set('age-accum',       age);
+    set('age-accum-solo',  age + 19);
+    set('age-accum-duo',   age + 11);
+  })();
+</script>
+</body>
+</html>
