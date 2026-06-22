@@ -1647,7 +1647,7 @@
     <div class="section-title">În cât timp ajungi la 300.000 €?</div>
 
     <p style="color:#9ca3af; font-size:14px; margin-bottom:1.5rem;">
-      Salariul de <strong style="color:var(--text)">2.000 €</strong> este deja net, după toate cheltuielile.
+      Cu un potențial salariu de <strong style="color:var(--text)">2.000 €</strong> net, după toate cheltuielile.
       Tot ce câștigi se economisește direct. Cu un partener, forța combinată
       comprimă radical drumul spre libertate.
     </p>
@@ -1673,7 +1673,7 @@
             <span class="ahs-val">150 luni</span>
           </div>
           <div class="accum-hero-stat">
-            <span class="ahs-label">Libertate la vârsta</span>
+            <span class="ahs-label">Libertate la vârsta de</span>
             <span class="ahs-val" id="age-solo-freedom">—</span>
           </div>
         </div>
@@ -1698,7 +1698,7 @@
             <span class="ahs-val">86–100 luni</span>
           </div>
           <div class="accum-hero-stat">
-            <span class="ahs-label">Libertate la vârsta</span>
+            <span class="ahs-label">Libertate la vârsta de</span>
             <span class="ahs-val" id="age-duo-freedom">—</span>
           </div>
         </div>
@@ -1729,13 +1729,12 @@
         <div class="col gold">~7,7 ani</div>
       </div>
       <div class="duo-scenario-row">
-        <div class="col tag-best">
-          <span class="col mono">3.500 €</span>
-          <span class="best-badge">optim</span>
-        </div>
-        <div class="col green">3.500 €</div>
-        <div class="col mono">86 luni</div>
-        <div class="col gold">~7,1 ani</div>
+<div class="col mono">3.500 €</div>
+<div class="col green">3.500 €</div>
+<div class="col mono">86 luni</div>
+<div class="col gold">~7,1 ani</div>
+
+
       </div>
     </div>
 
@@ -1893,13 +1892,22 @@
     set('age-footer',        age);
     set('age-accum',         age);
     set('age-accum-solo',    age + Math.ceil(SOLO_YEARS));
-    set('age-accum-duo',     age + Math.ceil(DUO_YEARS));
+set('age-accum-duo',     (age + DUO_MIN) + '–' + (age + DUO_MAX));
+
 
     // Hero cards
     set('solo-years-display', '~' + Math.ceil(SOLO_YEARS));
-    set('duo-years-display',  '~' + Math.ceil(DUO_YEARS));
-    set('age-solo-freedom',   (age + Math.ceil(SOLO_YEARS)) + ' ani');
-    set('age-duo-freedom',    (age + Math.ceil(DUO_YEARS)) + ' ani');
+const DUO_MIN = Math.floor(300000 / 3500 / 12); // 7
+const DUO_MAX = Math.ceil(300000 / 3000 / 12);  // 9
+set('duo-years-display', '~' + DUO_MIN + '–' + DUO_MAX);
+
+
+set('age-solo-freedom',   age + ' + ' + Math.ceil(SOLO_YEARS) + ' = ' + (age + Math.ceil(SOLO_YEARS)) + ' ani');
+const DUO_YEARS_MAX = Math.ceil(300000 / 3000 / 12 * 10) / 10;
+set('age-duo-freedom', age + ' + ' + DUO_MIN + '/' + DUO_MAX + ' = ' + (age + DUO_MIN) + '/' + (age + DUO_MAX) + ' ani');
+
+
+
   })();
 </script>
 </body>
