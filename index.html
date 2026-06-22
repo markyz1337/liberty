@@ -1880,7 +1880,7 @@
       return age;
     }
 
-    const age = calcAge(BIRTH);
+const age = 23;
     const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
     const SOLO_MONTHS = Math.ceil(300000 / 2000);
@@ -1904,7 +1904,10 @@
     set('duo-years-display',  '~' + DUO_MIN + '–' + DUO_MAX);
     set('age-solo-freedom',   age + ' + ' + Math.ceil(SOLO_YEARS) + ' = ' + (age + Math.ceil(SOLO_YEARS)) + ' ani');
     set('age-duo-freedom',    age + ' + ' + DUO_MIN + '/' + DUO_MAX + ' = ' + (age + DUO_MIN) + '/' + (age + DUO_MAX) + ' ani');
+    set('age-freedom-solo-vs', age + Math.ceil(SOLO_YEARS));
+    set('age-freedom-duo-vs',  age + DUO_MIN);
   })();
+
 </script>
 </body>
 </html>
